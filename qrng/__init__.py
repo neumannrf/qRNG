@@ -101,10 +101,6 @@ def get_random_int64() -> int:
     """Returns a uniformly random 64 bit integer."""
     return int(get_bit_string(64),2)
 
-def get_random_int128() -> int:
-    """Returns a uniformly random 128 bit integer."""
-    return int(get_bit_string(128),2)
-
 def get_random_float(min: float = 0, max: float = 1) -> float:
     """
     Returns a uniformly random single-precision float from the range [min,max).
