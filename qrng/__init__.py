@@ -5,7 +5,7 @@ import struct
 
 _circuit = None
 _bitCache = ''
-def set_provider_as_IBMQ(token: str = None):
+def set_provider_as_IBMQ(token: str = None, overwrite: bool = False):
     """
     Sets the backend provider to IBMQ with the given account token. Will fall back to a local (simulated) provider if no token is given.
 
@@ -16,7 +16,7 @@ def set_provider_as_IBMQ(token: str = None):
     if token == None or '':
         provider = qiskit.BasicAer 
     else: 
-        IBMQ.save_account(token)
+        IBMQ.save_account(token, overwrite=overwrite)
         IBMQ.load_account()
         provider = IBMQ.get_provider('ibm-q')
  
@@ -101,6 +101,10 @@ def get_random_int64() -> int:
     """Returns a uniformly random 64 bit integer."""
     return int(get_bit_string(64),2)
 
+def get_random_int128() -> int:
+    """Returns a uniformly random 128 bit integer."""
+    return int(get_bit_string(128),2)
+
 def get_random_float(min: float = 0, max: float = 1) -> float:
     """
     Returns a uniformly random single-precision float from the range [min,max).
@@ -133,7 +137,7 @@ def get_random_double(min: float = 0, max: float = 1) -> float:
 
 # Returns a random complex with both real and imaginary parts
 # from the given ranges. If no imaginary range specified, real range used.
-def get_random_complex_rect(real_min: float = 0, real_max: float = 0, img_min: float | None = None, img_max: float | None = None) -> complex:
+def get_random_complex_rect(real_min: float = 0, real_max: float = 0, img_min: float = None, img_max: float = None) -> complex:
     """
     Returns a random complex number with:
         Real-part: a uniformly sampled single-precision float from the range [real_min,real_max).
@@ -150,7 +154,7 @@ def get_random_complex_rect(real_min: float = 0, real_max: float = 0, img_min: f
     if img_max is None:
         img_max = real_max
     re = get_random_float(real_min,real_max)
-    im = get_random_float(img_min,img_min)
+    im = get_random_float(img_min,img_max)
     return re+im*1j
 
 def get_random_complex_polar(r: float = 1, theta: float = 2*math.pi) -> complex:
