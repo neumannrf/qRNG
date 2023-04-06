@@ -30,7 +30,7 @@ def _set_qubits(n):
 
 _set_qubits(8) # Default Circuit is 8 Qubits
  
-def set_backend(backend: str = 'qasm_simulator'):
+def set_backend(backend: str = 'ibmq_qasm_simulator'):
     """
     Sets the backend to one of the provider's available backends (quantum computers/simulators).
 
@@ -43,8 +43,8 @@ def set_backend(backend: str = 'qasm_simulator'):
     if (backend != '') and (backend in str(available_backends)):
         _backend = provider.get_backend(backend)
     else:
-        print(str(backend)+' is not available. Backend is set to qasm_simulator.')
-        _backend = qiskit.BasicAer.get_backend('qasm_simulator')
+        print(str(backend)+' is not available. Backend is set to ibmq_qasm_simulator.')
+        _backend = qiskit.BasicAer.get_backend('ibmq_qasm_simulator')
     _set_qubits(_backend.configuration().n_qubits)
 
 # Strips QISKit output to just a bitstring.
